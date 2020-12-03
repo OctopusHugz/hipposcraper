@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Sets up the hipposcraper:
+# Sets up the holbiescraper:
 #+  Configures aliases in .bashrc
 #+  Sets inputted user information in auth.json
 
-echo "Thanks for downloading the Hipposcraper! Let's get you set up."
+echo "Thanks for downloading the Holbiescraper! Let's get you set up."
 echo "  -> Checking if auth_data.json exists..."
 if [ ! -f auth_data.json ]
 then
@@ -51,26 +51,26 @@ then
     sed -i "s,YOUR_GITHUB_PROFILE_LINK,$github_link,g" auth_data.json
 fi
 
-if grep -q ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE hipposcrape.sh
+if grep -q ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE holbiescrape.sh
 then
-    sed -i "s/ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/$(pwd)/g" hipposcrape.sh
+    sed -i "s/ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/$(pwd)/g" holbiescrape.sh
 fi
 
 echo "Setting aliases:"
-if ! grep -q hippoproject ~/.bashrc || \
+if ! grep -q holbieproject ~/.bashrc || \
    ! grep -q hipporead  ~/.bashrc || \
-   ! grep -q hipposcrape ~/.bashrc
+   ! grep -q holbiescrape ~/.bashrc
 then
-    echo -e "\n# Hipposcraper aliases" >> ~/.bashrc
+    echo -e "\n# Holbiescraper aliases" >> ~/.bashrc
 fi
 
-if ! grep -q hippoproject.py ~/.bashrc
+if ! grep -q holbieproject.py ~/.bashrc
 then
-    project_alias="alias hippoproject='python2 $(pwd)/hippoproject.py'"
+    project_alias="alias holbieproject='python2 $(pwd)/holbieproject.py'"
     echo "$project_alias" >> ~/.bashrc
     echo "  -> $project_alias"
 else
-    echo "  -> hippoproject already defined"
+    echo "  -> holbieproject already defined"
 fi
 
 if ! grep -q hipporead.py ~/.bashrc
@@ -82,13 +82,13 @@ else
     echo "  -> hipporead already defined"
 fi
 
-if ! grep -q hipposcrape.sh ~/.bashrc
+if ! grep -q holbiescrape.sh ~/.bashrc
 then
-    scrape_alias="alias hipposcrape='python2 $(pwd)/hipposcrape.sh'"
+    scrape_alias="alias holbiescrape='$(pwd)/holbiescrape.sh'"
     echo "$scrape_alias" >> ~/.bashrc
     echo "  -> $scrape_alias"
 else
-    echo "  -> hipposcrape already defined"
+    echo "  -> holbiescrape already defined"
 fi
 
 echo "Reloading .bashrc:"
