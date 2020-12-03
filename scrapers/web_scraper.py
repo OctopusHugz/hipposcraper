@@ -17,6 +17,7 @@ class WebScraper:
     """
     py_flag = 0
     js_flag = 0
+    html_flag = 0
 
     def __init__(self, soup):
         self.soup = soup
@@ -103,7 +104,7 @@ class WebScraper:
                         self.js_flag = 1
                         w_file_name.write("#!/usr/bin/node\n")
                     elif ".html" in text_file:
-                        # insert HTML skeleton
+                        self.html_flag = 1
                         self.html_skeleton(text_file)
                     else:
                         pass
@@ -136,15 +137,21 @@ class WebScraper:
                 dir_file = open(item, "w+")
                 dir_file.close()
             os.chdir("..")
+        self.write_checker()
         print("done")
 
     def write_checker(self):
-        with open("check.sh", "w") as f:
+        with open("check.sh", "w+") as f:
             f.write("#!/usr/bin/env bash\n")
             if self.js_flag == 1:
                 f.write("semistandard --fix ")
-            if self.py_flag == 1:
+            elif self.py_flag == 1:
                 f.write("pep8 ")
+            elif self.html_flag == 1:
+                f.write("/home/vagrant/utils/W3C-Validator/w3c_validator.py ")
+            else:
+                print("What kind of files do we have here?")
             if self.file_names:
                 for i in self.file_names:
                     f.write('"%s" ' % i.next_sibling.text)
+            f.write("\n")

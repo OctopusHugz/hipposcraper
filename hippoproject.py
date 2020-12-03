@@ -46,7 +46,7 @@ def hippoproject():
 
     link = get_args()
 
-    print("\nHipposcraper version 2.0")
+    print("\nHolbiescraper version 2.0")
     print("Creating project:")
     parse_data = BaseParse(link)
 

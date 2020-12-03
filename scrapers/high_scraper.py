@@ -121,10 +121,11 @@ class HighScraper:
                 dir_file = open(item, "w+")
                 dir_file.close()
             os.chdir("..")
+        self.write_checker()
         print("done")
 
     def write_checker(self):
-        with open("check.sh", "w") as f:
+        with open("check.sh", "w+") as f:
             f.write("#!/usr/bin/env bash\n")
             if self.js_flag == 1:
                 f.write("semistandard --fix ")
@@ -133,3 +134,4 @@ class HighScraper:
             if self.file_names:
                 for i in self.file_names:
                     f.write('"%s" ' % i.next_sibling.text)
+            f.write("\n")

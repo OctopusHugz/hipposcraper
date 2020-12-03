@@ -2,6 +2,7 @@
 """Module for TestFileScraper"""
 from scrapers import *
 
+
 class TestFileScraper:
     """TestFileScraper class
 
@@ -27,19 +28,26 @@ class TestFileScraper:
             find_js = item.text.find(".js")
             find_html = item.text.find(".html")
 
+            # search for @ to indicate there's a username in prompt
+            user_exists = item.text.find("@")
+
             # find_main checks if there are main files on project page
             if find_test != -1 and (find_c != -1 or find_py != -1 or find_sql != -1 or find_js != -1 or find_html != -1):
                 try:
-                    user = item.text.split("$", 1)[0]
+                    if user_exists != -1:
+                        user = item.text.split("$", 1)[0]
+                        print("User is: {}".format(user))
                     name = item.text.split("cat ", 1)[1]
                     if find_c != -1:
                         name = name.split(".c", 1)[0] + ".c"
+                    elif find_py != -1:
+                        name = name.split(".py", 1)[0] + ".py"
                     elif find_sql != -1:
                         name = name.split(".sql", 1)[0] + ".sql"
                     elif find_js != -1:
                         name = name.split(".js", 1)[0] + ".js"
                     else:
-                        name = name.split(".py", 1)[0] + ".py"
+                        print("Checking for html files...")
                     # html edge case test text creation
                     if find_html != -1:
                         text = item.text.split(".html")[1]
@@ -47,10 +55,15 @@ class TestFileScraper:
                         text = text.split("\n", 1)[1]
                         name = name.split(".html", 1)[0] + ".html"
                     else:
+                        print("item.text is: {}".format(item.text))
+                        print("Name is: {}".format(name))
+                        print("item.text.split(name, 1) is: {}".format(item.text.split(name, 1)))
                         text = item.text.split(name, 1)[1]
                         text = text.split("\n", 1)[1]
-                        text = text.split(user, 1)[0]
-                        text = text.split("\n")
+                        print("Text is: {}".format(text))
+                        if user_exists != -1:
+                            text = text.split(user, 1)[0]
+                            text = text.split("\n")
                     w_test_file = open(name, "w+")
                     for i in range(len(text) - 1):
                         if find_html != -1:

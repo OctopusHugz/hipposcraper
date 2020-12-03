@@ -171,6 +171,7 @@ class LowScraper:
                 sys.stdout.write("task file %s\n" % file_text)
                 sys.stdout.write("                        ... ")
                 continue
+        self.write_checker()
         print("done")
 
     def write_checker(self):
@@ -182,3 +183,4 @@ class LowScraper:
             if self.file_names:
                 for i in self.file_names:
                     f.write('"%s" ' % i.next_sibling.text)
+            f.write("\n")

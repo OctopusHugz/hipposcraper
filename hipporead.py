@@ -26,6 +26,7 @@ def get_args():
     link = sys.argv[1]
     return link
 
+
 def hipporead():
     """Entry point for hipporeader
 
@@ -34,7 +35,7 @@ def hipporead():
 
     link = get_args()
 
-    print("\nHipposcraper version 1.1.1")
+    print("\nHolbiescraper version 2.0")
     print("Creating README.md file:")
     parse_data = BaseParse(link)
 
@@ -58,6 +59,7 @@ def hipporead():
     r_scraper.write_footer(author, user, git_link)
 
     print("README.md all set!")
+
 
 if __name__ == "__main__":
     hipporead()

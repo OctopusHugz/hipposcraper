@@ -94,8 +94,12 @@ class BaseParse(object):
         Sets project's directory's name to `dir_name`
         """
         find_dir = self.soup.find(string=re.compile("Directory: "))
-        find_dir_text = find_dir.next_element.text
-        return find_dir_text
+        if find_dir is not None:
+            find_dir_text = find_dir.next_element.text
+            return find_dir_text
+        sys.stdout.write("  -> Creating directory... ")
+        print("Looks like no directory is needed, you're on your own here!")
+        sys.exit()
 
     def create_directory(self):
         """Method that creates appropriate directory"""
