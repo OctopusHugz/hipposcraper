@@ -26,6 +26,7 @@ def get_args():
     link = sys.argv[1]
     return link
 
+
 def set_permissions():
     """Method that sets permissions on files"""
     sys.stdout.write("  -> Setting permissions... ")
@@ -34,7 +35,8 @@ def set_permissions():
         print("done")
     except OSError:
         print("[ERROR] Failed to set permissions")
-    
+
+
 def hippoproject():
     """Entry point for hippoproject
 
@@ -44,7 +46,7 @@ def hippoproject():
 
     link = get_args()
 
-    print("\nHipposcraper version 1.1.1")
+    print("\nHipposcraper version 2.0")
     print("Creating project:")
     parse_data = BaseParse(link)
 
@@ -87,12 +89,24 @@ def hippoproject():
         # Writing to files with scraped data
         sy_scraper.write_files()
 
+    elif "web" in project_type:
+        # Creating scraping objects
+        web_scraper = WebScraper(parse_data.soup)
+        t_scraper = TestFileScraper(parse_data.soup)
+
+        # Writing to files with scraped data
+        web_scraper.write_files()
+
+        # Creating test (main) files
+        t_scraper.write_test_files()
+
     else:
         print("[ERROR]: Could not determine project type")
         sys.exit()
 
     set_permissions()
     print("Project all set!")
+
 
 if __name__ == "__main__":
     hippoproject()
