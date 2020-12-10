@@ -18,6 +18,7 @@ class WebScraper:
     py_flag = 0
     js_flag = 0
     html_flag = 0
+    css_flag = 0
 
     def __init__(self, soup):
         self.soup = soup
@@ -71,13 +72,18 @@ class WebScraper:
         sys.stdout.write("  -> Creating task files... ")
         for item in self.file_names:
             text_file = item.next_sibling.text
+            if "images" in text_file:
+                os.mkdir("images")
+                continue
             try:
                 find_pyfile = text_file.find(".py")
                 find_comma = re.search('(.+?),', text_file)
 
                 # Creating sub directories if exists
-                find_folder = re.search(', (.+?)/', text_file)
-
+                if find_comma is not None:
+                    find_folder = re.search(', (.+?)/', text_file)
+                else:
+                    find_folder = re.search('(.+?)/', text_file)
                 find_dir_file = re.search('/(.+?)$', text_file)
                 if find_dir_file is not None:
                     new_dir_files.append(str(find_dir_file.group(1)))
@@ -106,6 +112,9 @@ class WebScraper:
                     elif ".html" in text_file:
                         self.html_flag = 1
                         self.html_skeleton(text_file)
+                    # elif ".css" in text_file:
+                    #     self.css_flag = 1
+                    #     w_file_name.write("{\n\t;\n}")
                     else:
                         pass
                     # Creating prototypes in parallel with files
@@ -147,7 +156,7 @@ class WebScraper:
                 f.write("semistandard --fix ")
             elif self.py_flag == 1:
                 f.write("pep8 ")
-            elif self.html_flag == 1:
+            elif self.html_flag == 1 or self.css_flag == 1:
                 f.write("/home/vagrant/utils/W3C-Validator/w3c_validator.py ")
             else:
                 print("What kind of files do we have here?")

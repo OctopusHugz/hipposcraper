@@ -31,7 +31,7 @@ def set_permissions():
     """Method that sets permissions on files"""
     sys.stdout.write("  -> Setting permissions... ")
     try:
-        os.system("chmod u+x *")
+        os.system("chmod -R u+x *")
         print("done")
     except OSError:
         print("[ERROR] Failed to set permissions")
