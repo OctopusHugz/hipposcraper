@@ -58,7 +58,7 @@ fi
 
 echo "Setting aliases:"
 if ! grep -q holbieproject ~/.bashrc || \
-   ! grep -q hipporead  ~/.bashrc || \
+   ! grep -q holbieread  ~/.bashrc || \
    ! grep -q holbiescrape ~/.bashrc
 then
     echo -e "\n# Holbiescraper aliases" >> ~/.bashrc
@@ -73,13 +73,13 @@ else
     echo "  -> holbieproject already defined"
 fi
 
-if ! grep -q hipporead.py ~/.bashrc
+if ! grep -q holbieread.py ~/.bashrc
 then
-  read_alias="alias hipporead='python2 $(pwd)/hipporead.py'"
+  read_alias="alias holbieread='python2 $(pwd)/holbieread.py'"
     echo "$read_alias" >> ~/.bashrc
     echo "  -> $read_alias"
 else
-    echo "  -> hipporead already defined"
+    echo "  -> holbieread already defined"
 fi
 
 if ! grep -q holbiescrape.sh ~/.bashrc
