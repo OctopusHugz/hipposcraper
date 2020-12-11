@@ -98,7 +98,7 @@ class BaseParse(object):
             find_dir_text = find_dir.next_element.text
             return find_dir_text
         sys.stdout.write("  -> Creating directory... ")
-        print("Looks like no directory is needed, you're on your own here!")
+        print("Looks like no directory is needed, or I can't find it! Try again!")
         sys.exit()
 
     def create_directory(self):

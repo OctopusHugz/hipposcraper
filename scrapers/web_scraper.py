@@ -112,9 +112,9 @@ class WebScraper:
                     elif ".html" in text_file:
                         self.html_flag = 1
                         self.html_skeleton(text_file)
-                    # elif ".css" in text_file:
-                    #     self.css_flag = 1
-                    #     w_file_name.write("{\n\t;\n}")
+                    elif ".css" in text_file:
+                        self.css_flag = 1
+                        w_file_name.write("{\n\t;\n}")
                     else:
                         pass
                     # Creating prototypes in parallel with files
