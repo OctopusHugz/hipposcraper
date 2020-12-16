@@ -25,7 +25,7 @@ read -r github_link
 
 # & escaper
 PASSWORD=$(sed 's/[\*\.&]/\\&/g' <<<"$password")
-hs_dir=$(PWD)
+hs_dir=$(pwd)
 
 if grep -q YOUR_HOLBERTON_INTRANET_USERNAME auth_data.json
 then
