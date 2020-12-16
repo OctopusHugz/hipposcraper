@@ -52,10 +52,10 @@ then
     sed -i "s,YOUR_GITHUB_PROFILE_LINK,$github_link,g" auth_data.json
 fi
 
-# if grep -q ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE holbiescrape.sh
-# then
-#     sed -i "s/ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/$hs_dir/g" holbiescrape.sh
-# fi
+if grep -q ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE holbiescrape.sh
+then
+    sed -i "s/ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/$hs_dir/g" holbiescrape.sh
+fi
 
 echo "Setting aliases:"
 if ! grep -q holbieproject ~/.bashrc || \
