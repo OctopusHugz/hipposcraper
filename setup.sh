@@ -49,7 +49,7 @@ fi
 
 if grep -q YOUR_GITHUB_PROFILE_LINK auth_data.json
 then
-    sed -i "s/YOUR_GITHUB_PROFILE_LINK/$github_link/g" auth_data.json
+    sed -i "s,YOUR_GITHUB_PROFILE_LINK,$github_link,g" auth_data.json
 fi
 
 # if grep -q ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE holbiescrape.sh
