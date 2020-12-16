@@ -37,15 +37,15 @@ then
     sed -i "s/YOUR_HOLBERTON_INTRANET_PASSWORD/$PASSWORD/g" auth_data.json
 fi
 
-# if grep -q YOUR_NAME auth_data.json
-# then
-#     sed -i "s/YOUR_NAME/$name/g" auth_data.json
-# fi
+if grep -q YOUR_NAME auth_data.json
+then
+    sed -i "s/YOUR_NAME/$name/g" auth_data.json
+fi
 
-# if grep -q YOUR_GITHUB_USERNAME auth_data.json
-# then
-#     sed -i "s/YOUR_GITHUB_USERNAME/$github_username/g" auth_data.json
-# fi
+if grep -q YOUR_GITHUB_USERNAME auth_data.json
+then
+    sed -i "s/YOUR_GITHUB_USERNAME/$github_username/g" auth_data.json
+fi
 
 # if grep -q YOUR_GITHUB_PROFILE_LINK auth_data.json
 # then
