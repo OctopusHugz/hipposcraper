@@ -163,7 +163,7 @@ class WebScraper:
             elif self.html_flag == 1 or self.css_flag == 1:
                 f.write("/home/vagrant/utils/W3C-Validator/w3c_validator.py ")
             else:
-                print("What kind of files do we have here?")
+                print("Doesn't look like check.sh is needed!")
             if self.file_names:
                 for i in self.file_names:
                     f.write('"%s" ' % i.next_sibling.text)
