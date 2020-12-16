@@ -118,7 +118,7 @@ class WebScraper:
                         w_file_name.write("{\n\t;\n}")
                     elif ".scss" in text_file:
                         self.scss_flag = 1
-                        w_file_name.write("/* */\n")
+                        w_file_name.write("/* My style */\n")
                     else:
                         pass
                     # Creating prototypes in parallel with files
