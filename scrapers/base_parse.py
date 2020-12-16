@@ -54,7 +54,7 @@ class BaseParse(object):
                 return json.load(json_file)
         except IOError:
             print("[ERROR] Please run ./setup.sh to setup your auth data...")
-            sys.exit()
+            sys.exit(1)
 
     def get_soup(self):
         """Method that parses the `htbn_link` with BeautifulSoup
@@ -78,9 +78,12 @@ class BaseParse(object):
             br.form['user[password]'] = self.json_data["intra_pass_key"]
             br.submit()
             page = br.open(self.__htbn_link)
+            page_text = page.get_data()
+            if "Forgot your password?" in page_text:
+                raise(AttributeError)
         except AttributeError:
-            print("[ERROR] Login failed - are your auth_data credentials correct?")
-            sys.exit()
+            print("[ERROR] Login failed - are your credentials in auth_data.json correct?")
+            sys.exit(1)
 
         print("done")
         self.soup = BeautifulSoup(page, 'html.parser')
@@ -99,7 +102,7 @@ class BaseParse(object):
             return find_dir_text
         sys.stdout.write("  -> Creating directory... ")
         print("Looks like no directory is needed, or I can't find it! Try again!")
-        sys.exit()
+        sys.exit(1)
 
     def create_directory(self):
         """Method that creates appropriate directory"""
@@ -110,7 +113,7 @@ class BaseParse(object):
             print("done")
         except OSError:
             print("[ERROR] Failed to create directory - does it already exist?")
-            sys.exit()
+            sys.exit(1)
 
     def project_type_check(self):
         """Method that checks the project's type
