@@ -19,6 +19,7 @@ class WebScraper:
     js_flag = 0
     html_flag = 0
     css_flag = 0
+    scss_flag = 0
 
     def __init__(self, soup):
         self.soup = soup
@@ -115,6 +116,9 @@ class WebScraper:
                     elif ".css" in text_file:
                         self.css_flag = 1
                         w_file_name.write("{\n\t;\n}")
+                    elif ".scss" in text_file:
+                        self.scss_flag = 1
+                        w_file_name.write("/* */")
                     else:
                         pass
                     # Creating prototypes in parallel with files
