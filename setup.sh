@@ -25,6 +25,7 @@ read -r github_link
 
 # & escaper
 PASSWORD=$(sed 's/[\*\.&]/\\&/g' <<<"$password")
+hs_dir=$(PWD)
 
 if grep -q YOUR_HOLBERTON_INTRANET_USERNAME auth_data.json
 then
@@ -48,12 +49,12 @@ fi
 
 if grep -q YOUR_GITHUB_PROFILE_LINK auth_data.json
 then
-    sed -i "s,YOUR_GITHUB_PROFILE_LINK,$github_link,g" auth_data.json
+    sed -i "s/YOUR_GITHUB_PROFILE_LINK/$github_link/g" auth_data.json
 fi
 
 if grep -q ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE holbiescrape.sh
 then
-    sed -i "s/ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/$(pwd)/g" holbiescrape.sh
+    sed -i "s/ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/$hs_dir/g" holbiescrape.sh
 fi
 
 echo "Setting aliases:"
