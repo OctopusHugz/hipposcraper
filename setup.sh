@@ -54,7 +54,7 @@ fi
 
 if grep -q ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE holbiescrape.sh
 then
-    sed -i "s/ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE/$hs_dir/g" holbiescrape.sh
+    sed -i "s,ENTER_FULL_PATHNAME_TO_DIRECTORY_HERE,$hs_dir,g" holbiescrape.sh
 fi
 
 echo "Setting aliases:"
