@@ -32,10 +32,10 @@ then
     sed -i "s/YOUR_HOLBERTON_INTRANET_USERNAME/$email/g" auth_data.json
 fi
 
-# if grep -q YOUR_HOLBERTON_INTRANET_PASSWORD auth_data.json
-# then
-#     sed -i "s/YOUR_HOLBERTON_INTRANET_PASSWORD/$PASSWORD/g" auth_data.json
-# fi
+if grep -q YOUR_HOLBERTON_INTRANET_PASSWORD auth_data.json
+then
+    sed -i "s/YOUR_HOLBERTON_INTRANET_PASSWORD/$PASSWORD/g" auth_data.json
+fi
 
 # if grep -q YOUR_NAME auth_data.json
 # then
