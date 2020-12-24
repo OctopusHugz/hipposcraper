@@ -94,10 +94,11 @@ class WebScraper:
                     one_dir_check += 1
 
                 # Handling multiple files
-                if "," in text_file:
-                    create_name = str(find_comma.group(1))
-                    make_comma = open(create_name, "w+")
-                    make_comma.close()
+                if ", " in text_file:
+                    comma_file_names = text_file.split(", ")
+                    for file_name in comma_file_names:
+                        make_comma = open(file_name, "w+")
+                        make_comma.close()
                 elif "." not in text_file and one_dir_check is not 1:
                     os.mkdir(text_file)
                 else:
