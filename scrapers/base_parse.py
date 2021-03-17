@@ -102,7 +102,7 @@ class BaseParse(object):
             return find_dir_text
         sys.stdout.write("  -> Creating directory... ")
         print("Looks like no directory is needed, or I can't find it! Try again!")
-        sys.exit(1)
+        return None
 
     def create_directory(self):
         """Method that creates appropriate directory"""
