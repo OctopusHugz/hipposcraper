@@ -1,9 +1,10 @@
 #!/usr/bin/env python2
-"""Main entry point for hippoproject
+"""Main entry point for holbieproject
 
 Usage:
-    `./hippoproject.py https://intranet.hbtn.io/projects/232`
+    `./holbieproject.py https://intranet.hbtn.io/projects/232`
 """
+from scrapers.interview_scraper import InterviewScraper
 from scrapers import *
 
 
@@ -37,8 +38,8 @@ def set_permissions():
         print("[ERROR] Failed to set permissions")
 
 
-def hippoproject():
-    """Entry point for hippoproject
+def holbieproject():
+    """Entry point for holbieproject
 
     Scrapes project type (low level, high level, or system engineer),
     then it checks project type to execute appropriate scrapes.
@@ -100,6 +101,17 @@ def hippoproject():
         # Creating test (main) files
         t_scraper.write_test_files()
 
+    elif "interview" in project_type:
+        # Creating scraping objects
+        interview_scraper = InterviewScraper(parse_data.soup)
+        t_scraper = TestFileScraper(parse_data.soup)
+
+        # Writing to files with scraped data
+        interview_scraper.write_files()
+
+        # Creating test (main) files
+        t_scraper.write_test_files()
+
     else:
         print("[ERROR]: Could not determine project type")
         sys.exit()
@@ -109,4 +121,4 @@ def hippoproject():
 
 
 if __name__ == "__main__":
-    hippoproject()
+    holbieproject()
