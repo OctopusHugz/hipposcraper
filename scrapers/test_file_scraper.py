@@ -19,10 +19,13 @@ class TestFileScraper:
         return self.soup.select("pre")
 
     def write_test_files(self):
+        name = ""
+        user = ""
         sys.stdout.write("  -> Creating test files... ")
         for item in self.pre:
             find_test = item.text.find("cat")
-            find_c = item.text.find("main.c")
+            find_c = item.text.find(".c")
+            find_h = item.text.find(".h")
             find_py = item.text.find(".py")
             find_sql = item.text.find(".sql")
             find_js = item.text.find(".js")
@@ -32,20 +35,21 @@ class TestFileScraper:
             user_exists = item.text.find("@")
 
             # find_main checks if there are main files on project page
-            if find_test != -1 and (find_c != -1 or find_py != -1 or find_sql != -1 or find_js != -1 or find_html != -1):
+            if find_test != -1 and (find_c != -1 or find_py != -1 or find_sql != -1 or find_js != -1 or find_html != -1 or find_h != -1):
                 try:
                     if user_exists != -1:
                         user = item.text.split("$", 1)[0]
-                        print("User is: {}".format(user))
                     name = item.text.split("cat ", 1)[1]
-                    if find_c != -1:
-                        name = name.split(".c", 1)[0] + ".c"
-                    elif find_py != -1:
+                    if find_py != -1:
                         name = name.split(".py", 1)[0] + ".py"
+                    elif find_c != -1:
+                        name = name.split(".c", 1)[0] + ".c"
                     elif find_sql != -1:
                         name = name.split(".sql", 1)[0] + ".sql"
                     elif find_js != -1:
                         name = name.split(".js", 1)[0] + ".js"
+                    elif find_h != -1:
+                        name = name.split(".h", 1)[0] + ".h"
                     else:
                         print("Checking for html files...")
                     # html edge case test text creation
@@ -55,12 +59,8 @@ class TestFileScraper:
                         text = text.split("\n", 1)[1]
                         name = name.split(".html", 1)[0] + ".html"
                     else:
-                        print("item.text is: {}".format(item.text))
-                        print("Name is: {}".format(name))
-                        print("item.text.split(name, 1) is: {}".format(item.text.split(name, 1)))
                         text = item.text.split(name, 1)[1]
                         text = text.split("\n", 1)[1]
-                        print("Text is: {}".format(text))
                         if user_exists != -1:
                             text = text.split(user, 1)[0]
                             text = text.split("\n")
@@ -72,6 +72,9 @@ class TestFileScraper:
                             w_test_file.write(text[i].encode('utf-8') + "\n")
                     w_test_file.close()
                 except (AttributeError, IndexError):
+                    if name == "" and user == "":
+                        # There is no file name, likely HTML file
+                        continue
                     newlines = 0
                     # Checks if test file's name has more than 1 newline
                     for i in name:
