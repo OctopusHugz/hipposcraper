@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
-"""Main entry point for hipporead
+"""Main entry point for holbieread
 
 Usage:
-    `./hipporead.py https://intranet.hbtn.io/projects/232`
+    `./holbieread.py https://intranet.hbtn.io/projects/232`
 """
 from scrapers import *
 
@@ -27,7 +27,7 @@ def get_args():
     return link
 
 
-def hipporead():
+def holbieread():
     """Entry point for hipporeader
 
     Scrapes for specific text to create a README automatically.
@@ -39,18 +39,20 @@ def hipporead():
     print("Creating README.md file:")
     parse_data = BaseParse(link)
 
+    project_type = parse_data.project_type_check()
     sys.stdout.write("  -> Scraping information... ")
     # Creating scraping object
-    r_scraper = ReadScraper(parse_data.soup)
+    r_scraper = ReadScraper(parse_data.soup, project_type)
 
     print("done")
 
     # Writing to README.md with scraped data
     r_scraper.open_readme()
     r_scraper.write_title()
-    r_scraper.write_rsc()
-    r_scraper.write_info()
     r_scraper.write_tasks()
+    if "interview" not in project_type:
+        r_scraper.write_rsc()
+        r_scraper.write_info()
 
     author = str(parse_data.json_data["author_name"])
     user = str(parse_data.json_data["github_username"])
@@ -62,4 +64,4 @@ def hipporead():
 
 
 if __name__ == "__main__":
-    hipporead()
+    holbieread()
