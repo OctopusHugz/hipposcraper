@@ -21,16 +21,17 @@ class ReadScraper:
     task_info = []
     readme = None
 
-    def __init__(self, soup):
+    def __init__(self, soup, project_type):
         self.soup = soup
+        if "interview" not in project_type:
+            self.prj_info = self.find_learning()
+            self.prj_rsc = self.find_resources()
         self.title = self.find_title()
         self.repo_name = self.find_repo_name()
         self.dir_name = self.check_big_project()
-        self.prj_info = self.find_learning()
         self.file_names = self.find_files()
         self.task_names = self.find_tasks()
         self.task_info = self.find_task_de()
-        self.prj_rsc = self.find_resources()
 
     def find_title(self):
         """Method that finds title of project"""
@@ -61,11 +62,10 @@ class ReadScraper:
         try:
             h2 = self.soup.find("h2", string=re.compile("Learning Objectives"))
             lu = h2.find_next("h3").next_element.next_element.next_element
-            txt= lu.text
+            txt = lu.text
             return txt.splitlines()
         except AttributeError:
-            print("[ERROR] Failed to scrape learning objectives")
-            sys.stdout.write("                         ... ")
+            print("[ERROR] Failed to scrape learning objectives... "),
             return ""
 
     def find_files(self):
@@ -83,8 +83,7 @@ class ReadScraper:
                     temp.append(file_text)
             return temp
         except (IndexError, AttributeError):
-            print("[ERROR] Failed to scrape file names")
-            sys.stdout.write("                         ... ")
+            print("[ERROR] Failed to scrape file names... "),
             return None
 
     def find_tasks(self):
@@ -113,8 +112,7 @@ class ReadScraper:
                     temp.append(info_text.encode('utf-8'))
             return temp
         except (IndexError, AttributeError):
-            print("[ERROR] Failed to scrape task descriptions")
-            print("                         ... ")
+            print("[ERROR] Failed to scrape task descriptions... "),
             return None
 
     def find_resources(self):
@@ -130,14 +128,13 @@ class ReadScraper:
                 url = item['href']
                 name = item.text
                 if (url.startswith('/rltoken/')):
-                    url = 'https://intranet.hbtn.io'+ url
+                    url = 'https://intranet.hbtn.io' + url
                 urls.append(url)
                 names.append(name)
             links = [names, urls]
             return links
         except AttributeError:
-            print("[ERROR] Failed to scrape resources")
-            sys.stdout.write("                         ... ")
+            print("[ERROR] Failed to scrape resources... "),
             return ""
 
     def open_readme(self):
@@ -170,7 +167,7 @@ class ReadScraper:
                 self.readme.write("* {}\n".format(item.encode('utf-8')))
             print("done")
         except (AttributeError, IndexError, UnicodeEncodeError):
-            print("\n     [ERROR] Failed to write learning objectives.")
+            print("\n     [ERROR] Failed to write learning objectives... "),
             pass
         self.readme.write("\n")
         self.readme.write("---\n")
@@ -178,7 +175,7 @@ class ReadScraper:
     def write_tasks(self):
         """Method that writes the entire tasks to README.md"""
         if (self.task_names is not None and self.file_names is not None and
-            self.task_info is not None):
+                self.task_info is not None):
             sys.stdout.write("  -> Writing task information... ")
             count = 0
             while count < len(self.task_names):
@@ -205,6 +202,7 @@ class ReadScraper:
         self.readme.write("* **{}** - ".format(author))
         self.readme.write("[{}]".format(user))
         self.readme.write("({})".format(git_link))
+        self.readme.write("\n")
         print("done")
 
     def write_rsc(self):
@@ -225,7 +223,7 @@ class ReadScraper:
 
             print("done")
         except (AttributeError, IndexError, UnicodeEncodeError):
-            print("\n     [ERROR] Failed to write resources.")
+            print("\n     [ERROR] Failed to write resources... "),
             pass
         self.readme.write("\n")
         self.readme.write("---\n")
